@@ -1,0 +1,15 @@
+{
+  "name": "the-whole-stack",
+  "version": "1.0.0",
+  "description": "Stacked, sliding-column navigation for note sites: a dependency-free drop-in plus a Markdown-to-site scaffold.",
+  "license": "MIT",
+  "type": "module",
+  "main": "src/sliding-columns.js",
+  "style": "src/sliding-columns.css",
+  "files": ["src", "scaffold.ts", "serve.ts", "docs", "examples", "README.md", "LICENSE"],
+  "scripts": {
+    "demo": "bun scaffold.ts --demo --out demo.html",
+    "serve": "bun serve.ts --dir ./site"
+  },
+  "keywords": ["sliding-panes", "stacked-notes", "digital-garden", "evergreen-notes", "zettelkasten", "navigation"]
+}

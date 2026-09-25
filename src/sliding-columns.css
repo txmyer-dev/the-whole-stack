@@ -1,0 +1,89 @@
+/* sliding-columns.css — layout + column states. Pairs with sliding-columns.js. */
+
+.sc-root {
+  --sc-column-width: 625px;
+  --sc-collapsed-width: 40px;
+  --sc-bg: #fff;
+  --sc-page-bg: #fafafc;
+  --sc-border: rgba(0, 0, 0, 0.05);
+  --sc-label-color: #333;
+  --sc-accent: rgba(10, 132, 255, 1);
+  --sc-shadow: 0 0 15px 3px rgba(0, 0, 0, 0.1);
+  --sc-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  height: 100vh;
+  background: var(--sc-page-bg);
+}
+
+.sc-track {
+  display: flex;
+  flex-grow: 1;
+  transition: width 100ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.sc-column {
+  position: sticky;
+  top: 0;
+  flex-shrink: 0;
+  flex-grow: 1;
+  width: var(--sc-column-width);
+  max-width: var(--sc-column-width);
+  height: 100%;
+  overflow-y: auto;
+  background: var(--sc-bg);
+  border-left: 1px solid var(--sc-border);
+  transition: box-shadow 100ms linear, opacity 75ms linear, background-color 150ms linear,
+              transform 200ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+.sc-column:first-of-type { border-left: none; }
+
+.sc-column[data-state="overlay"],
+.sc-column[data-state="obscured"] { box-shadow: var(--sc-shadow); }
+
+/* The note body fades out once the column has collapsed to a strip. */
+.sc-note { padding: 32px; transition: opacity 150ms linear; }
+.sc-column[data-state="obscured"] .sc-note { opacity: 0; pointer-events: none; }
+
+/* Vertical title shown only on collapsed columns. */
+.sc-label {
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: var(--sc-collapsed-width);
+  margin-top: 36px;
+  overflow: hidden;
+  writing-mode: vertical-lr;
+  font: 500 17px/40px var(--sc-font);
+  letter-spacing: 0.03em;
+  color: var(--sc-label-color);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms linear;
+}
+.sc-column[data-state="obscured"] .sc-label { opacity: 1; }
+.sc-column.sc-hover-target .sc-label { color: var(--sc-accent); }
+
+/* Columns that would be dropped if the hovered link were clicked. */
+.sc-column.sc-would-exit { background: var(--sc-page-bg); }
+
+/* Enter / exit */
+.sc-column.sc-entering,
+.sc-column.sc-exiting { opacity: 0; transform: scale(0.95); pointer-events: none; }
+
+/* Links whose target is already open in the stack. */
+a.sc-link-open { text-decoration-style: dotted; }
+
+.sc-loading, .sc-error { color: #888; font-family: var(--sc-font); }
+
+/* Mobile: one note at a time, normal page scrolling. */
+@media screen and (max-width: 800px) {
+  .sc-root { height: auto; overflow: visible; display: block; }
+  .sc-track { width: auto !important; display: block; }
+  .sc-column { position: static; width: auto; max-width: none; height: auto; overflow: visible; box-shadow: none !important; }
+  .sc-column:not(:last-child) { display: none; }
+  .sc-note { padding: 16px; opacity: 1 !important; }
+  .sc-label { display: none; }
+}
