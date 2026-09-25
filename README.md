@@ -2,6 +2,8 @@
 
 Stacked, sliding-column navigation for note sites and digital gardens. Click a link and the target opens in a new column to the right instead of replacing the page. The URL carries the whole stack, so any view is a shareable link and the back button just works. Scroll sideways and the columns you have passed collapse to a narrow strip showing their titles.
 
+**Live demo:** https://txmyer-dev.github.io/the-whole-stack/
+
 It is the navigation pattern from [Andy Matuschak's working notes](https://notes.andymatuschak.org), rebuilt as a dependency-free drop-in you can put on any page, plus a one-command generator that turns a folder of Markdown into a finished site.
 
 ```
